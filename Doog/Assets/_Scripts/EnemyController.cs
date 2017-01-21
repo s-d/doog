@@ -1,12 +1,22 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using UnityEngine.Windows.Speech;
-using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyController : MonoBehaviour {
 
     public float speed;
     private Renderer[] sprites;
+
+    private Animator[] spriteAnim;
+
+    //Tracks which texture is active -> _a or _s
+    private int _activeTexture = 0;
+
+    private RuntimeAnimatorController _body;
+    private RuntimeAnimatorController _legs;
+    private Texture2D _head;
+
+    private enum Parts { Body, Head, Legs }
 
     void Start()
     {
@@ -14,9 +24,7 @@ public class EnemyController : MonoBehaviour {
 
         // randomly generate 
         Vector3 initialPos = this.transform.localPosition;
-
         initialPos.x = Random.Range(-2.5f, 2.5f);
-
         this.transform.localPosition = initialPos;
 
     }
@@ -30,25 +38,40 @@ public class EnemyController : MonoBehaviour {
 
         this.transform.Translate(translation);
 
-        Debug.Log("whee " + this.transform.localPosition.x);
-
-        //TODO
         // destroy after off screen
         if (this.transform.localPosition.z <= -14.0f)
         {
             Destroy(this);
         }
-
 	}
 
-    public void SetLook(Texture2D[] textures)
+    public void SetLook()
     {
         sprites = this.GetComponentsInChildren<Renderer>();
 
-        for (int i = 0; i < textures.Length; ++i)
+        foreach (Parts part in System.Enum.GetValues(typeof(Parts)))
         {
-            sprites[i].material.shader = Shader.Find("Sprites/Diffuse");
-            sprites[i].material.SetTexture("_MainTex", textures[i]);
-        }
+            sprites[(int)part].material.shader = Shader.Find("Sprites/Diffuse");
+            sprites[(int)part].material.color = Color.Lerp(sprites[(int)part].material.color, Color.black, 1);
+        }        
+
+        spriteAnim = this.GetComponentsInChildren<Animator>();
+        spriteAnim[(int)Parts.Body].runtimeAnimatorController = _body;
+        sprites[(int)Parts.Head].material.SetTexture("_MainTex", _head);
+        spriteAnim[(int)Parts.Legs-1].runtimeAnimatorController = _legs;
+    }
+
+    public void SetBody(RuntimeAnimatorController body) 
+    {
+        _body = body;
+    }
+
+    public void SetLegs(RuntimeAnimatorController legs)
+    {
+        _legs = legs;
+    }
+
+    public void SetHead(Texture2D head) {
+        _head = head;
     }
 }

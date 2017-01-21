@@ -15,7 +15,7 @@ public class DeathStrip : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("in here " + other.name);
+        //Debug.Log("in here " + other.name);
 
         if (Input.GetKey("space"))
             Destroy(other.gameObject);

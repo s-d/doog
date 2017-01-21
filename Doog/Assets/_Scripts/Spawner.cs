@@ -5,93 +5,117 @@ using System.Collections.Generic;
 public class Spawner : MonoBehaviour {
 
     public GameObject prefab;
+    private List<Texture2D> _heads = new List<Texture2D>();
 
-    private List<Texture2D> bodies = new List<Texture2D>();
-    private List<Texture2D> heads = new List<Texture2D>();
-    private List<Texture2D> legs = new List<Texture2D>();
+    private List<RuntimeAnimatorController> _bodyAnims = new List<RuntimeAnimatorController>();
+    private List<RuntimeAnimatorController> _legAnims = new List<RuntimeAnimatorController>();
 
-	void Awake ()
+
+    private Texture2D samHead;
+
+    void Awake ()
     {
         LoadTextures();
     }
 
 	void Update ()
     {
-	
         if (Input.GetMouseButtonDown(0))
         {
             GameObject enemy = Instantiate(prefab) as GameObject;
 
             enemy.transform.SetParent(this.transform);
-
+            enemy.GetComponent<EnemyController>().SetBody(GetRandomBodyAnim());
+            enemy.GetComponent<EnemyController>().SetLegs(GetRandomLegsAnim());
+            enemy.GetComponent<EnemyController>().SetHead(GetRandomHeadTexture());
             // set look of enemy
-            enemy.GetComponent<EnemyController>().SetLook(GetRandomTextures());
+            enemy.GetComponent<EnemyController>().SetLook();
         }
 	}
 
-    Texture2D[] GetRandomTextures()
+    RuntimeAnimatorController GetRandomBodyAnim()
     {
-
-        Texture2D[] look = new Texture2D[3];
-
-        int rng = Random.Range(0, bodies.Count);
-
-        look[0] = bodies[rng];
-
-        rng = Random.Range(0, heads.Count);
-
-        look[1] = heads[rng];
-
-        rng = Random.Range(0, legs.Count);
-
-        look[2] = legs[rng];
-
-        return look;
+        RuntimeAnimatorController body;
+        int rng = Random.Range(0, _bodyAnims.Count);
+        body = _bodyAnims[rng];
+        return body;
     }
+
+    RuntimeAnimatorController GetRandomLegsAnim()
+    {
+        RuntimeAnimatorController legs;
+        int rng = Random.Range(0, _legAnims.Count);
+        legs = _legAnims[rng];
+        return legs;
+    }
+
+    Texture2D GetRandomHeadTexture()
+    {
+        Texture2D head;
+        int rng = Random.Range(0, _heads.Count);
+        head = _heads[rng];
+        return head;
+    }
+
 
     void LoadTextures()
     {
-        int count = 1;
+        // Load Body Sets
+        Object[] resources = Resources.LoadAll("Sprites/Body");
+        extractAnimation(resources, _bodyAnims);
 
-        var tex = Resources.Load("Sprites\\Body\\body_0" + count + "_a") as Texture2D;
+        // Load Legs Sets
+        resources = Resources.LoadAll("Sprites/Legs");
+        extractAnimation(resources, _legAnims);
 
-        while (tex)
-        {
-            tex.filterMode = FilterMode.Point;
-            bodies.Add(tex);
-            count++;
-            tex = Resources.Load("Sprites\\Body\\body_0" + count + "_a") as Texture2D;
-
-            Debug.Log(tex);
-        }
-
-        count = 1;
-        tex = null;
-        tex = Resources.Load("Sprites\\Head\\head_0" + count) as Texture2D;
-
-        while (tex)
-        {
-            tex.filterMode = FilterMode.Point;
-            heads.Add(tex);
-            count++;
-
-            tex = Resources.Load("Sprites\\Head\\head_0" + count) as Texture2D;
-        }
-
-
-        count = 1;
-        tex = null;
-        tex = Resources.Load("Sprites\\Legs\\legs_0" + count + "_a") as Texture2D;
-
-        while (tex)
-        {
-            tex.filterMode = FilterMode.Point;
-            legs.Add(tex);
-            count++;
-            tex = Resources.Load("Sprites\\Legs\\legs_0" + count + "_a") as Texture2D;
-        }
-
+        resources = Resources.LoadAll("Sprites/Head");
+        FindHeads(resources);
         Debug.Log("load");
     }
+
+    void extractAnimation(Object[] resources, List<RuntimeAnimatorController> anims)
+    {
+        // TODO, move into findParts
+        for (int i = 0; i < resources.Length; ++i)
+        {
+            if (resources[i] is RuntimeAnimatorController)
+            {
+                bool existsAlready = false;
+                foreach (RuntimeAnimatorController tex in anims)
+                {
+                    if (tex.name == resources[i].name)
+                    {
+                        existsAlready = true;
+                    }
+                }
+
+                if (!existsAlready)
+                {
+                    anims.Add(resources[i] as RuntimeAnimatorController);
+                }
+            }
+        }
+    }
+
+    void FindHeads(Object[] resources)
+    {
+        // TODO, move into findParts
+        for (int i = 0; i < resources.Length; ++i)
+        {
+            if (resources[i] is Texture2D)
+            {
+                if (resources[i].name != "sam")
+                    _heads.Add(resources[i] as Texture2D);
+                else
+                    samHead = resources[i] as Texture2D;
+
+            }
+
+        }
+    }
 }
+
+
+
+
 
