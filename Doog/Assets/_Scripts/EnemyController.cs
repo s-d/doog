@@ -24,7 +24,7 @@ public class EnemyController : MonoBehaviour {
 
         // randomly generate 
         Vector3 initialPos = this.transform.localPosition;
-        initialPos.x = Random.Range(-2.5f, 2.5f);
+        initialPos.x = Random.Range(-2.3f, 2.3f);
         transform.localPosition = initialPos;
     }
 	
@@ -40,7 +40,8 @@ public class EnemyController : MonoBehaviour {
         // destroy after off screen
         if (this.transform.localPosition.z <= -14.0f || transform.localPosition.y <= -15.0f)
         {
-            Destroy(this);
+            Debug.Log("destroy" + this.name);
+            Destroy(this.gameObject);
         }
 	}
 
