@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using UnityEngine.Windows.Speech;
-using System.Collections;
 using System.Collections.Generic;
 
 public class EnemyController : MonoBehaviour {
@@ -10,7 +8,7 @@ public class EnemyController : MonoBehaviour {
     private Renderer[] sprites;
 
     //Tracks which texture is active -> _a or _s
-    private int _activeTexture;
+    private int _activeTexture = 0;
 
     private List<Texture2D> _body;
     private List<Texture2D> _legs;
@@ -38,35 +36,37 @@ public class EnemyController : MonoBehaviour {
 
         this.transform.Translate(translation);
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            // Flip Texture
-            _activeTexture = 1 - _activeTexture;
-            sprites[(int)Parts.Body].material.SetTexture("_MainTex", _body[_activeTexture]);
-            sprites[(int)Parts.Legs].material.SetTexture("_MainTex", _legs[_activeTexture]);
-        }
-
-
         // destroy after off screen
         if (this.transform.localPosition.z <= -14.0f)
         {
             Destroy(this);
         }
-
 	}
 
     public void SetLook()
     {
         sprites = this.GetComponentsInChildren<Renderer>();
-        _activeTexture = 0;
-        sprites[(int)Parts.Body].material.shader = Shader.Find("Sprites/Diffuse");
-        sprites[(int)Parts.Body].material.SetTexture("_MainTex", _body[_activeTexture]);
+        Shader tmp = Shader.Find("Sprites/Diffuse");
 
-        sprites[(int)Parts.Head].material.shader = Shader.Find("Sprites/Diffuse");
-        sprites[(int)Parts.Head].material.SetTexture("_MainTex", _head);
+        foreach (Parts part in System.Enum.GetValues(typeof(Parts)))
+        {
+            sprites[(int)part].material.shader = Shader.Find("Sprites/Diffuse");
 
-        sprites[(int)Parts.Legs].material.shader = Shader.Find("Sprites/Diffuse");
-        sprites[(int)Parts.Legs].material.SetTexture("_MainTex", _legs[_activeTexture]);
+            if (part == Parts.Body)
+            {
+                sprites[(int)part].material.SetTexture("_MainTex", _body[_activeTexture]);
+            } 
+            else if (part == Parts.Head)
+            {
+                sprites[(int)part].material.SetTexture("_MainTex", _head);
+            } 
+            else if (part == Parts.Legs)
+            {
+                sprites[(int)part].material.SetTexture("_MainTex", _legs[_activeTexture]);
+            }
+            
+            sprites[(int)part].material.color = Color.Lerp(sprites[(int)part].material.color, Color.black, 1);
+        }        
     }
 
     public void SetBody(List<Texture2D> body) 
