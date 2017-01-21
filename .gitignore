@@ -29,3 +29,5 @@ sysinfo.txt
 *.apk
 *.unitypackage
 Doog/Library/
+Doog/Temp/UnityLockfile
+Doog/Temp/
