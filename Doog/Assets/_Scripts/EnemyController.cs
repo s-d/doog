@@ -25,8 +25,7 @@ public class EnemyController : MonoBehaviour {
         // randomly generate 
         Vector3 initialPos = this.transform.localPosition;
         initialPos.x = Random.Range(-2.5f, 2.5f);
-        this.transform.localPosition = initialPos;
-
+        transform.localPosition = initialPos;
     }
 	
 	// Update is called once per frame
@@ -39,7 +38,7 @@ public class EnemyController : MonoBehaviour {
         this.transform.Translate(translation);
 
         // destroy after off screen
-        if (this.transform.localPosition.z <= -14.0f)
+        if (this.transform.localPosition.z <= -14.0f || transform.localPosition.y <= -15.0f)
         {
             Destroy(this);
         }
