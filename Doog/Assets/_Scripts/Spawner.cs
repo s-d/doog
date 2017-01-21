@@ -5,8 +5,6 @@ using System.Collections.Generic;
 public class Spawner : MonoBehaviour {
 
     public GameObject prefab;
-
-
     private List<List<Texture2D>> _bodies = new List<List<Texture2D>>();
     private List<List<Texture2D>> _legs = new List<List<Texture2D>>();
     private List<Texture2D> _heads = new List<Texture2D>();
@@ -63,38 +61,19 @@ public class Spawner : MonoBehaviour {
 
         // Load Body Sets
         Object[] resources = Resources.LoadAll("Sprites/Body");
-        findParts(resources, _bodies);
+        extractTextureParts(resources, _bodies);
 
         // Load Legs Sets
         resources = Resources.LoadAll("Sprites/Legs");
-        findParts(resources, _legs);
+        extractTextureParts(resources, _legs);
 
         resources = Resources.LoadAll("Sprites/Head");
+        extractTexturePart(resources, _heads);
 
-        // TODO, move into findParts
-        for (int i = 0; i < resources.Length; ++i)
-        {
-            if (resources[i] is Texture2D)
-            {
-                bool existsAlready = false;
-                foreach (Texture2D tex in _heads)
-                {
-                    if (tex.name == resources[i].name)
-                    {
-                        existsAlready = true;
-                    }
-                }
-
-                if (!existsAlready)
-                {
-                    _heads.Add(resources[i] as Texture2D);
-                }
-            }
-        }
         Debug.Log("load");
     }
 
-    void findParts(Object[] resources, List<List<Texture2D>> storage)
+    void extractTextureParts(Object[] resources, List<List<Texture2D>> storage)
     {
         // Ohh God it's dirty
         for (int i = 0; i < resources.Length; ++i)
@@ -133,7 +112,31 @@ public class Spawner : MonoBehaviour {
                 }
             }
         }
-    } 
+    }
+    
+    
+    void extractTexturePart(Object[] resources, List<Texture2D> storage)
+    {
+        for (int i = 0; i < resources.Length; ++i)
+        {
+            if (resources[i] is Texture2D)
+            {
+                bool existsAlready = false;
+                foreach (Texture2D tex in _heads)
+                {
+                    if (tex.name == resources[i].name)
+                    {
+                        existsAlready = true;
+                    }
+                }
+
+                if (!existsAlready)
+                {
+                    storage.Add(resources[i] as Texture2D);
+                }
+            }
+        }
+    }
 
 }
 
