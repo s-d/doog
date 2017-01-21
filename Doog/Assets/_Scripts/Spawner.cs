@@ -5,11 +5,15 @@ using System.Collections.Generic;
 public class Spawner : MonoBehaviour {
 
     public GameObject prefab;
-    private List<List<Texture2D>> _bodies = new List<List<Texture2D>>();
-    private List<List<Texture2D>> _legs = new List<List<Texture2D>>();
     private List<Texture2D> _heads = new List<Texture2D>();
 
-	void Awake ()
+    private List<RuntimeAnimatorController> _bodyAnims = new List<RuntimeAnimatorController>();
+    private List<RuntimeAnimatorController> _legAnims = new List<RuntimeAnimatorController>();
+
+
+    private Texture2D samHead;
+
+    void Awake ()
     {
         LoadTextures();
     }
@@ -21,29 +25,27 @@ public class Spawner : MonoBehaviour {
             GameObject enemy = Instantiate(prefab) as GameObject;
 
             enemy.transform.SetParent(this.transform);
-            enemy.GetComponent<EnemyController>().SetBody(GetRandomBodyTextures());
-            enemy.GetComponent<EnemyController>().SetLegs(GetRandomLegsTextures());
+            enemy.GetComponent<EnemyController>().SetBody(GetRandomBodyAnim());
+            enemy.GetComponent<EnemyController>().SetLegs(GetRandomLegsAnim());
             enemy.GetComponent<EnemyController>().SetHead(GetRandomHeadTexture());
             // set look of enemy
             enemy.GetComponent<EnemyController>().SetLook();
         }
 	}
 
-
-    // TODO, clean up
-    List<Texture2D> GetRandomBodyTextures()
+    RuntimeAnimatorController GetRandomBodyAnim()
     {
-        List<Texture2D> body;
-        int rng = Random.Range(0, _bodies.Count);
-        body = _bodies[rng];
+        RuntimeAnimatorController body;
+        int rng = Random.Range(0, _bodyAnims.Count);
+        body = _bodyAnims[rng];
         return body;
     }
 
-    List<Texture2D> GetRandomLegsTextures()
+    RuntimeAnimatorController GetRandomLegsAnim()
     {
-        List<Texture2D> legs;
-        int rng = Random.Range(0, _legs.Count);
-        legs = _legs[rng];
+        RuntimeAnimatorController legs;
+        int rng = Random.Range(0, _legAnims.Count);
+        legs = _legAnims[rng];
         return legs;
     }
 
@@ -58,71 +60,28 @@ public class Spawner : MonoBehaviour {
 
     void LoadTextures()
     {
-
         // Load Body Sets
         Object[] resources = Resources.LoadAll("Sprites/Body");
-        extractTextureParts(resources, _bodies);
+        extractAnimation(resources, _bodyAnims);
 
         // Load Legs Sets
         resources = Resources.LoadAll("Sprites/Legs");
-        extractTextureParts(resources, _legs);
+        extractAnimation(resources, _legAnims);
 
         resources = Resources.LoadAll("Sprites/Head");
-        extractTexturePart(resources, _heads);
-
+        FindHeads(resources);
         Debug.Log("load");
     }
 
-    void extractTextureParts(Object[] resources, List<List<Texture2D>> storage)
+    void extractAnimation(Object[] resources, List<RuntimeAnimatorController> anims)
     {
-        // Ohh God it's dirty
+        // TODO, move into findParts
         for (int i = 0; i < resources.Length; ++i)
         {
-            if (resources[i] is Texture2D)
+            if (resources[i] is RuntimeAnimatorController)
             {
                 bool existsAlready = false;
-                // If the bodies list dosen't contain that part already
-                foreach (List<Texture2D> checkParts in storage)
-                {
-                    foreach (Texture2D body in checkParts)
-                    {
-                        if (body.name == resources[i].name)
-                        {
-                            existsAlready = true;
-                        }
-                    }
-                }
-
-                // Not already part of a body list
-                if (!existsAlready)
-                {
-                    List<Texture2D> parts = new List<Texture2D>();
-                    parts.Add(resources[i] as Texture2D);
-                    string currentTexture = resources[i].name;
-                    // Look for other animations of that body, my eyes are bleeding
-                    for (int j = 0; j < resources.Length; ++j)
-                    {
-                        // Next texture is not equal to the current one but is of the  same kind
-                        if (resources[j] is Texture2D && resources[j].name != currentTexture && resources[j].name.Substring(0, 7) == currentTexture.Substring(0, 7))
-                        {
-                            parts.Add(resources[j] as Texture2D);
-                        }
-                    }
-                    storage.Add(parts);
-                }
-            }
-        }
-    }
-    
-    
-    void extractTexturePart(Object[] resources, List<Texture2D> storage)
-    {
-        for (int i = 0; i < resources.Length; ++i)
-        {
-            if (resources[i] is Texture2D)
-            {
-                bool existsAlready = false;
-                foreach (Texture2D tex in _heads)
+                foreach (RuntimeAnimatorController tex in anims)
                 {
                     if (tex.name == resources[i].name)
                     {
@@ -132,12 +91,28 @@ public class Spawner : MonoBehaviour {
 
                 if (!existsAlready)
                 {
-                    storage.Add(resources[i] as Texture2D);
+                    anims.Add(resources[i] as RuntimeAnimatorController);
                 }
             }
         }
     }
 
+    void FindHeads(Object[] resources)
+    {
+        // TODO, move into findParts
+        for (int i = 0; i < resources.Length; ++i)
+        {
+            if (resources[i] is Texture2D)
+            {
+                if (resources[i].name != "sam")
+                    _heads.Add(resources[i] as Texture2D);
+                else
+                    samHead = resources[i] as Texture2D;
+
+            }
+
+        }
+    }
 }
 
 

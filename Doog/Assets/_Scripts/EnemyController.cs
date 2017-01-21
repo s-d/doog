@@ -7,11 +7,13 @@ public class EnemyController : MonoBehaviour {
     public float speed;
     private Renderer[] sprites;
 
+    private Animator[] spriteAnim;
+
     //Tracks which texture is active -> _a or _s
     private int _activeTexture = 0;
 
-    private List<Texture2D> _body;
-    private List<Texture2D> _legs;
+    private RuntimeAnimatorController _body;
+    private RuntimeAnimatorController _legs;
     private Texture2D _head;
 
     private enum Parts { Body, Head, Legs }
@@ -46,35 +48,25 @@ public class EnemyController : MonoBehaviour {
     public void SetLook()
     {
         sprites = this.GetComponentsInChildren<Renderer>();
-        Shader tmp = Shader.Find("Sprites/Diffuse");
 
         foreach (Parts part in System.Enum.GetValues(typeof(Parts)))
         {
             sprites[(int)part].material.shader = Shader.Find("Sprites/Diffuse");
-
-            if (part == Parts.Body)
-            {
-                sprites[(int)part].material.SetTexture("_MainTex", _body[_activeTexture]);
-            } 
-            else if (part == Parts.Head)
-            {
-                sprites[(int)part].material.SetTexture("_MainTex", _head);
-            } 
-            else if (part == Parts.Legs)
-            {
-                sprites[(int)part].material.SetTexture("_MainTex", _legs[_activeTexture]);
-            }
-            
             sprites[(int)part].material.color = Color.Lerp(sprites[(int)part].material.color, Color.black, 1);
         }        
+
+        spriteAnim = this.GetComponentsInChildren<Animator>();
+        spriteAnim[(int)Parts.Body].runtimeAnimatorController = _body;
+        sprites[(int)Parts.Head].material.SetTexture("_MainTex", _head);
+        spriteAnim[(int)Parts.Legs-1].runtimeAnimatorController = _legs;
     }
 
-    public void SetBody(List<Texture2D> body) 
+    public void SetBody(RuntimeAnimatorController body) 
     {
         _body = body;
     }
 
-    public void SetLegs(List<Texture2D> legs)
+    public void SetLegs(RuntimeAnimatorController legs)
     {
         _legs = legs;
     }
