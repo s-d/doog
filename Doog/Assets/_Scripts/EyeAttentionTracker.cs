@@ -29,7 +29,7 @@ public class EyeAttentionTracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!TobiiAvailable) { return; } // Don't even bother - we're not ready or such
+        //if (!TobiiAvailable) { return; } // Don't even bother - we're not ready or such
 
         // Don't process if dead. This should be swapped out when there's some
         // game-wide marker of alive/dead we can use.

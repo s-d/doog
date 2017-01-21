@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 using System.Collections.Generic;
 
 public class EnemyController : MonoBehaviour {
@@ -20,7 +20,7 @@ public class EnemyController : MonoBehaviour {
 
     void Start()
     {
-        PrefabUtility.DisconnectPrefabInstance(this);
+      //  PrefabUtility.DisconnectPrefabInstance(this);
 
         // randomly generate 
         Vector3 initialPos = this.transform.localPosition;
