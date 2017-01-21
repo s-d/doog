@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DeathStrip : MonoBehaviour {
+public class AnimationStrip : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -13,11 +13,9 @@ public class DeathStrip : MonoBehaviour {
 	
 	}
 
+
     void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("in here " + other.name);
-
-        if (Input.GetKey("space"))
-            Destroy(other.gameObject);
+        Debug.Log("Animation strip triggered" + other.name);
     }
 }
