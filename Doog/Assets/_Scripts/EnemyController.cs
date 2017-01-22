@@ -18,6 +18,8 @@ public class EnemyController : MonoBehaviour {
 
     private enum Parts { Body, Head, Legs }
 
+    private bool falling = false;
+
     void Start()
     {
       //  PrefabUtility.DisconnectPrefabInstance(this);
@@ -26,6 +28,7 @@ public class EnemyController : MonoBehaviour {
         Vector3 initialPos = this.transform.localPosition;
         initialPos.x = Random.Range(-2.3f, 2.3f);
         transform.localPosition = initialPos;
+        _gameLogic = GameObject.FindGameObjectWithTag("GameLogic").GetComponent<GameLogic>();
     }
 	
 	// Update is called once per frame
@@ -45,7 +48,15 @@ public class EnemyController : MonoBehaviour {
             _gameLogic.damage();
             Destroy(this.gameObject);
         }
-	}
+
+
+        if (!falling && this.transform.localPosition.y <= -0.1f)
+        {
+            falling = true;
+            Subtitles.ChangeTitle();
+        }
+
+    }
 
     public void SetLook()
     {
