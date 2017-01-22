@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 using System.Collections.Generic;
 
 public class EnemyController : MonoBehaviour {
@@ -20,13 +20,12 @@ public class EnemyController : MonoBehaviour {
 
     void Start()
     {
-        PrefabUtility.DisconnectPrefabInstance(this);
+      //  PrefabUtility.DisconnectPrefabInstance(this);
 
         // randomly generate 
         Vector3 initialPos = this.transform.localPosition;
-        initialPos.x = Random.Range(-2.5f, 2.5f);
-        this.transform.localPosition = initialPos;
-
+        initialPos.x = Random.Range(-2.3f, 2.3f);
+        transform.localPosition = initialPos;
     }
 	
 	// Update is called once per frame
@@ -39,9 +38,10 @@ public class EnemyController : MonoBehaviour {
         this.transform.Translate(translation);
 
         // destroy after off screen
-        if (this.transform.localPosition.z <= -14.0f)
+        if (this.transform.localPosition.z <= -14.0f || transform.localPosition.y <= -15.0f)
         {
-            Destroy(this);
+            Debug.Log("destroy" + this.name);
+            Destroy(this.gameObject);
         }
 	}
 
