@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEditor.SceneManagement;
 
 public class Title : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class Title : MonoBehaviour
     public Image lightning;
     public float fadeTime = 5f;
     Color colorToFadeTo;
+
+    public GameObject space;
 
 
     private void Start()
@@ -30,17 +33,23 @@ public class Title : MonoBehaviour
         {
             lightningStrike();
         }
+
+        if (lightning.canvasRenderer.GetColor().a < 0.3)
+            space.SetActive(true);
+
+        if (Input.GetKeyDown("space"))
+        {
+            EditorSceneManager.LoadScene("FirstScene");
+        }
     }
 
 
     private void lightningStrike()
     {
-
         logo_doom.SetActive(false);
         logo_doog.SetActive(true);
         lightning.enabled = true;
         colorToFadeTo = new Color(1, 1, 1, 0);
         lightning.CrossFadeColor(colorToFadeTo, fadeTime, true, true);
-
     }
 }
