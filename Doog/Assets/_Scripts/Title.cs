@@ -8,12 +8,12 @@ public class Title : MonoBehaviour
     public GameObject logo_doom;
     public GameObject logo_doog;
     public Image lightning;
-    public float fadeTime = 5f;
+    public float fadeTime = 1f;
     Color colorToFadeTo;
-
+    public AudioSource audSource;
     public GameObject space;
-
-
+    private bool once = false;
+    
     private void Start()
     {
         lightning.enabled = false;
@@ -31,7 +31,11 @@ public class Title : MonoBehaviour
         }
         else
         {
-            lightningStrike();
+            if (!once)
+            {
+                once = true;
+                lightningStrike();
+            }
         }
 
         if (lightning.canvasRenderer.GetColor().a < 0.3)
@@ -46,6 +50,7 @@ public class Title : MonoBehaviour
 
     private void lightningStrike()
     {
+        audSource.PlayOneShot(audSource.clip);
         logo_doom.SetActive(false);
         logo_doog.SetActive(true);
         lightning.enabled = true;
