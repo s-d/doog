@@ -24,7 +24,15 @@ public class PlayList : MonoBehaviour {
             Debug.Log("Changing");
             StartCoroutine(beatChange());
         }
+
+        if (Spawner.dead)
+        {
+            _changing = true;
+            _audioSource.Stop();
+        }
 	}
+
+    
 
     IEnumerator beatChange()
     {

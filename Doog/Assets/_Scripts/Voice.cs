@@ -17,6 +17,8 @@ public class Voice : MonoBehaviour {
         _audioEnemy = Resources.LoadAll<AudioClip>("Audio/Voices/Enemy");
         _audioHurt = Resources.LoadAll<AudioClip>("Audio/Voices/Hurt");
         _sam = Resources.Load<AudioClip>("Audio/Voices/Sam/Hey");
+
+        _audioSource.volume = 1.0f;
     }
 	
 	// Update is called once per frame

@@ -18,7 +18,12 @@ public class GameLogic : MonoBehaviour {
         if (_healthbar.GetComponent<Slider>().value == 0)
         {
             Debug.Log("Fire Death");
-            _voice.getRandomDeath().Play();
+
+            if (!Spawner.dead)
+            {
+                _voice.getRandomDeath().Play();
+
+            }
             Spawner.dead = true;
 
         }
