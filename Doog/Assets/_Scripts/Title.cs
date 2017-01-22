@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class Title : MonoBehaviour
 {
@@ -39,7 +39,7 @@ public class Title : MonoBehaviour
 
         if (Input.GetKeyDown("space"))
         {
-            EditorSceneManager.LoadScene("FirstScene");
+            SceneManager.LoadScene("FirstScene");
         }
     }
 

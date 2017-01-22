@@ -33,7 +33,6 @@ public class TrapDoor : MonoBehaviour
          {
             transform.Rotate(new Vector3(-70.0f, 0, 0));
             transform.Translate(new Vector3(0, 0.78f, -0.785f));
-            GetComponent<HealthBar>().decreaseHealth();
         }
 
         if (_healthbar.GetComponent<Slider>().value >= 95)

@@ -6,7 +6,7 @@ public class EyeAttentionTracker : MonoBehaviour
     private bool TobiiAvailable = false;
     private float LastAttentionTimestamp;
     private const float threshold = 5f; // Maybe make this variable between 3-6s ? Make it risky!
-    private bool dead = false;
+   
 
     // Use this for initialization
     void Start()
@@ -33,7 +33,7 @@ public class EyeAttentionTracker : MonoBehaviour
 
         // Don't process if dead. This should be swapped out when there's some
         // game-wide marker of alive/dead we can use.
-        if (dead) { return; }
+        if (Spawner.dead) { return; }
 
         GazePoint gazePoint = EyeTracking.GetGazePoint();
         if (gazePoint.IsValid)
@@ -48,6 +48,9 @@ public class EyeAttentionTracker : MonoBehaviour
                 LastAttentionTimestamp = Time.time;
             }
 
+            Debug.Log(0.2 * Screen.width);
+            Debug.Log(gazePoint.Screen.x + gazePoint.Screen.y);
+
             // Check for gaze timeout or staleness (eye tracking lost, for example)
             // if we're done, trigger game over
             if (Time.time - LastAttentionTimestamp > threshold
@@ -55,7 +58,7 @@ public class EyeAttentionTracker : MonoBehaviour
             {
                 Debug.Log("Player failed to pay attention and was killed");
                 // Trigger the stabbing here
-                dead = true;
+                Spawner.dead = true;
             }
         }
     }
