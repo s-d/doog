@@ -6,7 +6,6 @@ public class EnemyController : MonoBehaviour {
 
     public float speed;
     private Renderer[] sprites;
-
     private Animator[] spriteAnim;
 
     //Tracks which texture is active -> _a or _s
@@ -15,6 +14,7 @@ public class EnemyController : MonoBehaviour {
     private RuntimeAnimatorController _body;
     private RuntimeAnimatorController _legs;
     private Texture2D _head;
+    private GameLogic _gameLogic;
 
     private enum Parts { Body, Head, Legs }
 
@@ -38,9 +38,11 @@ public class EnemyController : MonoBehaviour {
         this.transform.Translate(translation);
 
         // destroy after off screen
+        // Take away one life
         if (this.transform.localPosition.z <= -14.0f || transform.localPosition.y <= -15.0f)
         {
             Debug.Log("destroy" + this.name);
+            _gameLogic.damage();
             Destroy(this.gameObject);
         }
 	}
@@ -73,5 +75,10 @@ public class EnemyController : MonoBehaviour {
 
     public void SetHead(Texture2D head) {
         _head = head;
+    }
+
+    public void SetGameLogic(GameLogic gamelogic)
+    {
+        _gameLogic = gamelogic;
     }
 }
