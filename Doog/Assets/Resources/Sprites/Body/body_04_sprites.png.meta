@@ -1,9 +1,12 @@
 fileFormatVersion: 2
-guid: 91af1172bb4186b429e2dcf2a073030a
-timeCreated: 1485041950
+guid: fb0504b539110664cac4997b4dcfcfaf
+timeCreated: 1485048922
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: body_04_sprites_0
+    21300002: body_04_sprites_1
+    21300004: body_04_sprites_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -50,7 +53,46 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: body_04_sprites_0
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 0
+        width: 25
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: body_04_sprites_1
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 0
+        width: 25
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: body_04_sprites_2
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 0
+        width: 25
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 

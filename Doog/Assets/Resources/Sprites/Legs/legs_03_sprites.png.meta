@@ -1,9 +1,11 @@
 fileFormatVersion: 2
-guid: 91af1172bb4186b429e2dcf2a073030a
-timeCreated: 1485041950
+guid: ecc61f1cf6dac25469760bcbab2b005a
+timeCreated: 1485048733
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: legs_03_sprites_0
+    21300002: legs_03_sprites_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -50,7 +52,33 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: legs_03_sprites_0
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 0
+        width: 25
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: legs_03_sprites_1
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 0
+        width: 25
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 
