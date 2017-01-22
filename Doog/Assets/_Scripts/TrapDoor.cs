@@ -13,7 +13,7 @@ public class TrapDoor : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Vector3 currentPosition = this.transform.localPosition;
-            transform.Translate(new Vector3(0, -6.0f, 0.785f));
+            transform.Translate(new Vector3(0, -0.78f, 0.79f));
             transform.Rotate(new Vector3(70.0f, 0, 0));
             _space_used++;
         }
@@ -21,7 +21,7 @@ public class TrapDoor : MonoBehaviour
          if (Input.GetKeyUp(KeyCode.Space))
          {
             transform.Rotate(new Vector3(-70.0f, 0, 0));
-            transform.Translate(new Vector3(0, 6.0f, -0.785f));
+            transform.Translate(new Vector3(0, 0.78f, -0.785f));
         }
     }
 }
