@@ -7,6 +7,4 @@ public class DeathStrip : MonoBehaviour {
     {
         Destroy(other.gameObject);
     }
-
-
 }

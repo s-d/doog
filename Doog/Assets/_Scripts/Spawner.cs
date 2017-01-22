@@ -5,11 +5,10 @@ using System.Collections.Generic;
 public class Spawner : MonoBehaviour {
 
     public GameObject prefab;
+    public GameLogic _gameLogic;
     private List<Texture2D> _heads = new List<Texture2D>();
-
     private List<RuntimeAnimatorController> _bodyAnims = new List<RuntimeAnimatorController>();
     private List<RuntimeAnimatorController> _legAnims = new List<RuntimeAnimatorController>();
-
 
     private Texture2D samHead;
 
@@ -30,6 +29,7 @@ public class Spawner : MonoBehaviour {
             enemy.GetComponent<EnemyController>().SetHead(GetRandomHeadTexture());
             // set look of enemy
             enemy.GetComponent<EnemyController>().SetLook();
+            enemy.GetComponent<EnemyController>().SetGameLogic(_gameLogic);
         }
 	}
 
@@ -112,6 +112,11 @@ public class Spawner : MonoBehaviour {
             }
 
         }
+    }
+
+    void FindSam(Object[] resources)
+    {
+
     }
 }
 
