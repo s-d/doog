@@ -10,7 +10,11 @@ public class Spawner : MonoBehaviour {
     private List<RuntimeAnimatorController> _bodyAnims = new List<RuntimeAnimatorController>();
     private List<RuntimeAnimatorController> _legAnims = new List<RuntimeAnimatorController>();
 
+    private List<GameObject> enemies = new List<GameObject>();
+
     private Texture2D samHead;
+
+    public static bool dead = false;
 
     void Awake ()
     {
@@ -30,6 +34,16 @@ public class Spawner : MonoBehaviour {
             // set look of enemy
             enemy.GetComponent<EnemyController>().SetLook();
             enemy.GetComponent<EnemyController>().SetGameLogic(_gameLogic);
+
+            enemies.Add(enemy);
+        }
+
+        if (dead)
+        {
+            foreach(GameObject clone in enemies)
+            {
+                Destroy(clone);
+            }
         }
 	}
 
