@@ -9,7 +9,7 @@ public class PlayList : MonoBehaviour {
     private bool _changing = false;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         _audioSource = gameObject.GetComponentInChildren<AudioSource>();
         _audioClips = Resources.LoadAll<AudioClip>("Audio/Drum_Loops");
         _audioSource.loop = true;

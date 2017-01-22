@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Spawner : MonoBehaviour {
+public class Spawner : MonoBehaviour, AudioProcessor.AudioCallbacks {
 
     public GameObject prefab;
     public GameLogic _gameLogic;
@@ -19,24 +19,15 @@ public class Spawner : MonoBehaviour {
     void Awake ()
     {
         LoadTextures();
+        //Select the instance of AudioProcessor and pass a reference
+        //to this object
+        AudioProcessor processor = FindObjectOfType<AudioProcessor>();
+        processor.addAudioCallback(this);
     }
 
 	void Update ()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            GameObject enemy = Instantiate(prefab) as GameObject;
 
-            enemy.transform.SetParent(this.transform);
-            enemy.GetComponent<EnemyController>().SetBody(GetRandomBodyAnim());
-            enemy.GetComponent<EnemyController>().SetLegs(GetRandomLegsAnim());
-            enemy.GetComponent<EnemyController>().SetHead(GetRandomHeadTexture());
-            // set look of enemy
-            enemy.GetComponent<EnemyController>().SetLook();
-            enemy.GetComponent<EnemyController>().SetGameLogic(_gameLogic);
-
-            enemies.Add(enemy);
-        }
 
         if (dead)
         {
@@ -128,10 +119,32 @@ public class Spawner : MonoBehaviour {
         }
     }
 
-    void FindSam(Object[] resources)
+    void spawn()
+    {
+        GameObject enemy = Instantiate(prefab) as GameObject;
+
+        enemy.transform.SetParent(this.transform);
+        enemy.GetComponent<EnemyController>().SetBody(GetRandomBodyAnim());
+        enemy.GetComponent<EnemyController>().SetLegs(GetRandomLegsAnim());
+        enemy.GetComponent<EnemyController>().SetHead(GetRandomHeadTexture());
+        // set look of enemy
+        enemy.GetComponent<EnemyController>().SetLook();
+        enemy.GetComponent<EnemyController>().SetGameLogic(_gameLogic);
+
+        enemies.Add(enemy);
+    }
+
+    public void onOnbeatDetected()
+    {
+        Debug.Log("Beat!!!");
+        spawn();
+    }
+
+    public void onSpectrum(float[] spectrum)
     {
 
     }
+
 }
 
 

@@ -20,6 +20,8 @@ public class EnemyController : MonoBehaviour {
 
     private bool falling = false;
 
+    public bool evil = true;
+
     void Start()
     {
       //  PrefabUtility.DisconnectPrefabInstance(this);
@@ -45,7 +47,10 @@ public class EnemyController : MonoBehaviour {
         if (this.transform.localPosition.z <= -14.0f || transform.localPosition.y <= -15.0f)
         {
             Debug.Log("destroy" + this.name);
-            _gameLogic.damage();
+
+            if (evil)
+                _gameLogic.damage();
+
             Destroy(this.gameObject);
         }
 
