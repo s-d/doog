@@ -16,7 +16,8 @@ public class TrapDoor : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             _healthbar.GetComponent<Slider>().value++;
-        } else
+        }
+        else
         {
             _healthbar.GetComponent<Slider>().value--;
         }
