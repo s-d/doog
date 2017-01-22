@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 066648c1b5b00e54a94bb98d4292e99e
-timeCreated: 1485048878
+guid: bcfc71f1458e58149b177af0a1a0a336
+timeCreated: 1485048806
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
-    21300000: legs_02_sprites_0
-    21300002: legs_02_sprites_1
+    21300000: leg_05_a_0
+    21300002: leg_05_a_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -54,7 +54,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: legs_02_sprites_0
+      name: leg_05_a_0
       rect:
         serializedVersion: 2
         x: 20
@@ -67,7 +67,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: legs_02_sprites_1
+      name: leg_05_a_1
       rect:
         serializedVersion: 2
         x: 84
