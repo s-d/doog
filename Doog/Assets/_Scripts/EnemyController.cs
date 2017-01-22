@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour {
     public float speed;
     private Renderer[] sprites;
     private Animator[] spriteAnim;
+    private Voice _voice;
 
     //Tracks which texture is active -> _a or _s
     private int _activeTexture = 0;

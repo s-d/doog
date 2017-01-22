@@ -35,10 +35,4 @@ public class PlayList : MonoBehaviour {
         yield return new WaitForSeconds(15);
         _changing = false;
     }
-
-
-    void loadAudioClip(Object[] resources)
-    {
-
-    }
 }
