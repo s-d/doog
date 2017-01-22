@@ -16,7 +16,8 @@ public class TrapDoor : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             _healthbar.GetComponent<Slider>().value++;
-        } else
+        }
+        else
         {
             _healthbar.GetComponent<Slider>().value--;
         }
@@ -33,7 +34,6 @@ public class TrapDoor : MonoBehaviour
          {
             transform.Rotate(new Vector3(-70.0f, 0, 0));
             transform.Translate(new Vector3(0, 0.78f, -0.785f));
-            GetComponent<HealthBar>().decreaseHealth();
         }
 
         if (_healthbar.GetComponent<Slider>().value >= 95)
